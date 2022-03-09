@@ -6,7 +6,7 @@ module fsm_moore (
    );
 
 reg [3:0]	r_ns=3'b000; //next state
-reg [3:0]	r_cs; //current state
+reg [3:0]	r_cs=3'b000; //current state
 
 parameter	init 	= 3'b000,
 			a_0 	= 3'b001,
@@ -55,16 +55,31 @@ end
 
 // synopsys translate_off
 
-    reg     [15*8-1:0]  MESSAGE; 
+    reg     [15*8-1:0]  Curr_state; 
+
+    always @(*) begin
+        case(r_cs)
+            init        :   Curr_state <= "Init";
+            a_0      	:   Curr_state <= "A0";
+            a_1  		:   Curr_state <= "A1";
+            ok_0 		:   Curr_state <= "OK0";
+            ok_1        :   Curr_state <= "OK1";
+            default     :   Curr_state <= "DEFAULT";
+        endcase
+    end
+
+
+
+    reg     [15*8-1:0]  Next_state; 
 
     always @(*) begin
         case(r_ns)
-            init        :   MESSAGE <= "Init";
-            a_0      	:   MESSAGE <= "A0";
-            a_1  		:   MESSAGE <= "A1";
-            ok_0 		:   MESSAGE <= "OK0";
-            ok_1        :   MESSAGE <= "OK1";
-            default     :   MESSAGE <= "DEFAULT";
+            init        :   Next_state <= "Init";
+            a_0      	:   Next_state <= "A0";
+            a_1  		:   Next_state <= "A1";
+            ok_0 		:   Next_state <= "OK0";
+            ok_1        :   Next_state <= "OK1";
+            default     :   Next_state <= "DEFAULT";
         endcase
     end
 
