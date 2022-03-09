@@ -16,51 +16,71 @@ always #(period/2) begin clk <=~clk; end
 
 initial begin
 						rstn = 0;
-	#(100) 				rstn = 1;
-		 				i_input = 2'b00;
-	#(50+3*period-2)	rstn = 0;
+	#(period/2-2)
 	
-	#(4+48)				i_input = 2'b01;
-						rstn = 1;
-	#(50+3*period-2)	rstn = 0;
-	
-	#(4+48)				i_input = 2'b11;
-						rstn = 1;
-	#(50+3*period-2)	rstn = 0; 
-	
-	//Green Path	
-	#(4+48)				i_input = 2'b10;
-						rstn = 1;
-	#(2*period)			i_input = 2'b11;
-	#(50+1*period-2)	rstn = 0;
-
-	//Purple Path
-	#(4+48)				i_input = 2'b00;
-						rstn = 1;
-	#(period)			i_input = 2'b11;
-	#(period)			i_input = 2'b00;
-	#(period)			i_input = 2'b10;
-	#(period)			i_input = 2'b01;	
-	#(50+1*period-2)	rstn = 0;
-
-	//Gray Path
-	#(4+48)				i_input = 2'b00;
-						rstn = 1;
-	#(period)			i_input = 2'b00;
-	#(period)			i_input = 2'b11;
-	#(period)			i_input = 2'b00;
-	#(period)			i_input = 2'b00;	
-	#(period)			i_input = 2'b11;	
-	#(period)			i_input = 2'b01;	
-	#(period)			i_input = 2'b10;	
-	#(50+1*period-2)	rstn = 0;
+	//Red Path
+	state_change_3times(2'b00,2'b00,2'b00);
+	state_change_3times(2'b01,2'b01,2'b01);
+	state_change_3times(2'b11,2'b11,2'b11);
+	state_change_3times(2'b10,2'b10,2'b11);
+	state_change_5times(2'b00,2'b11,2'b00,2'b10,2'b01);
+	state_change_8times(2'b00,2'b00,2'b11,2'b00,2'b00,2'b11,2'b01,2'b10);
 	
 	#(200) $finish;
 
 
 end
 
+task state_change_3times;
+		input [1:0] in_1, in_2, in_3;
 
+		begin
+			#(period)
+			#(2+period/2) 		rstn = 1;
+								i_input = in_1;
+			#(period/2)			i_input = in_1;
+			#(period)			i_input = in_2;
+			#(period)			i_input = in_3;
+			#(period-2)			rstn = 0;
+		end
+endtask
+
+
+task state_change_5times;
+		input [1:0] in_1, in_2, in_3, in_4, in_5;
+
+		begin
+			#(period)
+			#(2+period/2) 		rstn = 1;
+								i_input = in_1;
+			#(period/2)			i_input = in_1;
+			#(period)			i_input = in_2;
+			#(period)			i_input = in_3;
+			#(period)			i_input = in_4;
+			#(period)			i_input = in_5;
+			#(period-2)			rstn = 0;
+		end
+endtask
+
+task state_change_8times;
+		input [1:0] in_1, in_2, in_3, in_4, in_5,
+					in_6, in_7, in_8;
+
+		begin
+			#(period)
+			#(2+period/2) 		rstn = 1;
+								i_input = in_1;
+			#(period/2)			i_input = in_1;
+			#(period)			i_input = in_2;
+			#(period)			i_input = in_3;
+			#(period)			i_input = in_4;
+			#(period)			i_input = in_5;
+			#(period)			i_input = in_6;
+			#(period)			i_input = in_7;
+			#(period)			i_input = in_8;
+			#(period-2)			rstn = 0;
+		end
+endtask
 
 /*
 
