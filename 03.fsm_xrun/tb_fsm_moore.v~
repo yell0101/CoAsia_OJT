@@ -18,7 +18,6 @@ initial begin
 						rstn = 0;
 	#(period/2-2)
 	
-	//Red Path
 	state_change_3times(2'b00,2'b00,2'b00);
 	state_change_3times(2'b01,2'b01,2'b01);
 	state_change_3times(2'b11,2'b11,2'b11);
