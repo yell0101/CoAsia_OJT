@@ -13,9 +13,8 @@ initial begin iclk=0; end
 always #(50) begin iclk <= ~iclk; end
 
 always @(posedge iclk) begin
-	if(i_load)			begin i_load <= 0; end
-	else if(o_ready)	begin i_load <= 1; end
-	else				begin i_load <= 0; end
+	if(o_ready)	begin i_load <= 1; end
+	else		begin i_load <= 0; end
 end
 
 initial begin
@@ -57,3 +56,4 @@ always @(*) begin
 end
 // synopsys translate_on
 endmodule
+

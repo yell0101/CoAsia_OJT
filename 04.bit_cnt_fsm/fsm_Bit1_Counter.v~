@@ -71,7 +71,7 @@ end
 
 // o_ready generation
 always @(posedge iclk or negedge irstn) begin
-	if(!irstn)	begin o_ready <= 1'b0; end
+	if(!irstn)	begin o_ready = 1'b0; end
 		else begin
 				case(n_state)
 						IDLE	: o_ready <= 1'b1;
